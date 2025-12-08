@@ -3,40 +3,30 @@ package com.example;
 public class Radio {
     private int currentStation;
     private int currentVolume;
+    private int maxStation;
 
-    public int getCurrentStation() {
-        return currentStation;
+    public Radio() {
+        this.maxStation = 9; // 10 станций: от 0 до 9
     }
 
-    public void setCurrentStation(int newStation) {
-        if (newStation < 0 || newStation > 9) {
-            return;
+    public Radio(int stationsCount) {
+        if (stationsCount <= 0) {
+            throw new IllegalArgumentException("Количество станций должно быть положительным");
         }
-        currentStation = newStation;
+        this.maxStation = stationsCount - 1;
     }
 
-    public int getCurrentVolume() {
-        return currentVolume;
-    }
-
-    public void setCurrentVolume(int newVolume) {
-        if (newVolume < 0 || newVolume > 100) {
-            return;
-        }
-        currentVolume = newVolume;
-    }
-
-    public void nextStation() {
-        if (currentStation == 9) {
+    public void next() {
+        if (currentStation == maxStation) {
             currentStation = 0;
         } else {
             currentStation++;
         }
     }
 
-    public void prevStation() {
+    public void prev() {
         if (currentStation == 0) {
-            currentStation = 9;
+            currentStation = maxStation;
         } else {
             currentStation--;
         }
@@ -44,13 +34,39 @@ public class Radio {
 
     public void increaseVolume() {
         if (currentVolume < 100) {
-            currentVolume = currentVolume + 1;
+            currentVolume++;
         }
     }
 
     public void decreaseVolume() {
         if (currentVolume > 0) {
-            currentVolume = currentVolume - 1;
+            currentVolume--;
         }
+    }
+
+    public int getCurrentStation() {
+        return currentStation;
+    }
+
+    public void setCurrentStation(int currentStation) {
+        if (currentStation < 0 || currentStation > maxStation) {
+            return;
+        }
+        this.currentStation = currentStation;
+    }
+
+    public int getCurrentVolume() {
+        return currentVolume;
+    }
+
+    public void setCurrentVolume(int currentVolume) {
+        if (currentVolume < 0 || currentVolume > 100) {
+            return;
+        }
+        this.currentVolume = currentVolume;
+    }
+
+    public int getMaxStation() {
+        return maxStation;
     }
 }
